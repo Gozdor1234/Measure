@@ -15,7 +15,8 @@ object ImageLoader {
     fun load(context: Context, uri: Uri): Bitmap? {
         val cr = context.contentResolver
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        cr.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) } ?: return null
+        // Bounds-only decode always returns null; only a missing stream is a failure here.
+        (cr.openInputStream(uri) ?: return null).use { BitmapFactory.decodeStream(it, null, bounds) }
         var sample = 1
         while (max(bounds.outWidth, bounds.outHeight) / sample > MAX_SIDE) sample *= 2
 
