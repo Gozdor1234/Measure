@@ -23,7 +23,7 @@ Pinch to zoom. A magnifier appears while dragging a point. Units toggle between 
 ## Install
 
 Every push to `main` builds the APK with GitHub Actions and publishes it to the
-[Latest build](../../releases/tag/latest) release. Download `Measure.apk` on the phone and install it.
+[Releases](../../releases) page (newest is marked Latest). Download `Measure.apk` on the phone and install it.
 
 ## Build
 

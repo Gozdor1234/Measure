@@ -24,11 +24,12 @@ jobs:
       - name: Run tests and build APK
         run: ./gradlew testDebugUnitTest assembleDebug
 
-      - name: Publish APK to the "latest" release
+      - name: Publish APK as a new numbered release
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: v0.1.${{ github.run_number }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk Measure.apk
-          gh release delete latest --cleanup-tag -y || true
-          gh release create latest Measure.apk --latest --target "$GITHUB_SHA" \
-            --title "Latest build" --notes "Built from ${GITHUB_SHA::7}"
+          gh release delete latest --cleanup-tag -y || true  # old single "Latest build" release
+          gh release create "$TAG" Measure.apk --latest --target "$GITHUB_SHA" \
+            --title "Measure $TAG" --notes "Built from ${GITHUB_SHA::7}"
